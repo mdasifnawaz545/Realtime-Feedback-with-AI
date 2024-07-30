@@ -1,5 +1,5 @@
 import mongoose,{Schema, Document} from "mongoose";
-import { Message } from "../../../types";
+import { Message } from "../../types";
 
 // Document is used for the typesafety for specifying the things defined here only for the mongoDB Document if we are using typescript.
 
