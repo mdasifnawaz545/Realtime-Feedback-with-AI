@@ -6,7 +6,7 @@ import { Message } from "../../types";
 export const messageSchema:Schema<Message> = new Schema({
 message:{
     type:String, // 'S' of string in Mongoose is written in Capital.
-     required:true,
+    required:true,
 },
 createdAt:{
     type : Date,
