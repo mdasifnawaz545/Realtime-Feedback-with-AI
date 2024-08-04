@@ -1,6 +1,6 @@
-import { NextRequest } from "next/server";
+import NextAuth from "next-auth/next"
+import { authOptions } from "./options"
 
-async function POST(request:NextRequest) {
-    let requestURL=new URL(request.url);
-    
-}
+const handler =  NextAuth(authOptions);
+
+export {handler as GET , handler as POST}
