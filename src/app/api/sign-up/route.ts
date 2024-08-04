@@ -2,7 +2,6 @@ import DBConnection from "@/lib/dbConnection";
 import UserModel from "@/model/User";
 import { sendVerificaitonEmail } from "@/helpers/sendVerificationEmail";
 import bcryptjs from 'bcryptjs'
-import { NextResponse } from "next/server";
 import { messageSchema } from "@/model/Message";
 
 interface Props {
@@ -14,11 +13,12 @@ interface Props {
     }
 }
 
-export async function POST({ params: { username, email, password, verifyCode
-} }: Props) {
+export async function POST(request: Request) {
 
+    let { username, email, password } = await request.json();
+    console.log(username, "||", email, "||", password);
     await DBConnection();
-
+    console.log("Database Connected")
 
     try {
         const userVerifiedByEmail = await UserModel.findOne({ email });
@@ -31,7 +31,7 @@ export async function POST({ params: { username, email, password, verifyCode
         expires.setHours(expires.getHours() + 1);
         if (userVerifiedByEmail) {
             if (await UserModel.findOne({ $and: [{ email: email }, { verified: true }] })) {
-                return NextResponse.json({
+                return Response.json({
                     success: false,
                     message: 'User is already registered'
                 }, {
@@ -69,25 +69,26 @@ export async function POST({ params: { username, email, password, verifyCode
             );
 
             await newUser.save();
+
         }
 
         const emailResponse = await sendVerificaitonEmail(username, email, sixDigitCode);
         if (!emailResponse.success) {
-            return NextResponse.json({ success: false, message: emailResponse.message }, { status: 500 })
+            return Response.json({ success: false, message: emailResponse.message }, { status: 500 })
         }
         else {
-            return NextResponse.json({ success: true, message: emailResponse.message }, { status: 500 })
+            return Response.json({ success: true, message: emailResponse.message }, { status: 500 })
         }
 
         // let finalVerification = await UserModel.findOne({ verifyCode: verifyCode })
         // if (finalVerification) {
         //     await UserModel.findOne({ email: email }, { $set: { verifyCode: true } })
-        //     return NextResponse.json({ success: true, message: "User Registered Successfully" }, { status: 500 })
+        //     return Response.json({ success: true, message: "User Registered Successfully" }, { status: 500 })
         // }
 
     } catch (err) {
         console.error("Error while Registering the user")
-        return NextResponse.json({
+        return Response.json({
             success: false,
             message: "Error while Registering the user"
         }, {
