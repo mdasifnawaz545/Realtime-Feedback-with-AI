@@ -10,6 +10,7 @@ import { useToast } from "@/components/ui/use-toast"
 import { useRouter } from "next/navigation"
 import { signUpSchema } from "@/schemas/signUpSchema"
 import { API_Response } from "../../../../types"
+import { FlatESLint } from "eslint/use-at-your-own-risk"
 
 
 const page = async () => {
@@ -48,7 +49,7 @@ const page = async () => {
                 try {
                     const uniqueUsernameResponse = await axios.get(`/api/check-username?username=${usernameDebounce}`);
                     console.log(uniqueUsernameResponse);
-                    setUsername(uniqueUsernameResponse.data.message);
+                    setUsernameMessage(uniqueUsernameResponse.data.message);
                 } catch (error) {
                     const axiosError = error as AxiosError<API_Response>;
                     setUsernameMessage(axiosError.response?.data.message ?? 'Error')
@@ -61,13 +62,44 @@ const page = async () => {
 
     }, [usernameDebounce]);
 
-    const handleSubmit = async(data:z.infer<typeof signUpSchema>)=>{
+    const handleSubmit = async (data: z.infer<typeof signUpSchema>) => {
         setIssubmitting(true);
-        
+        try {
+            const userResponse = await axios.post('/api/sign-up', data);
+            toast({
+                title: "Sucesss",
+                description: userResponse.data.message
+            })
+            router.replace(`/verify/${username}`)
+            setIssubmitting(false);
+            //how the data is coming inside the response by using an axios through the backend will see by console.log() the response of the userResponse.
+            console.log(userResponse)
+        } catch (error) {
+            const axiosError = error as AxiosError<API_Response>;
+            let errorMessage = axiosError.response?.data.message;
+            toast({
+                title: "Failure",
+                description: errorMessage,
+                variant: "destructive"
+            })
+            setIssubmitting(false);
+        }
+
     }
 
+    //we are using axios call to communicate with the backend only for frontend part we are using the method of router to navigate in the frontend side.
+
     return (
-        <div>page</div>
+        <div className="flex justify-center items-center min-h-screen bg-gray-100">
+            <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-md">
+                <div className="text-center">
+                    <h1 className="texte-4xl
+                     font-extrabold tracking-tighter lg:text-5xl mb-6">Join Relatime Feedback</h1>
+                    <p className="mb-4">Sign up to start your ananoymous adventure</p>
+                </div>
+            </div>
+
+        </div>
     )
 }
 
