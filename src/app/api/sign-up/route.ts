@@ -77,7 +77,7 @@ export async function POST(request: Request) {
             return Response.json({ success: false, message: emailResponse.message }, { status: 500 })
         }
         else {
-            return Response.json({ success: true, message: emailResponse.message }, { status: 500 })
+            return Response.json({ success: true, message: emailResponse.message }, { status: 200 })
         }
 
         // let finalVerification = await UserModel.findOne({ verifyCode: verifyCode })
