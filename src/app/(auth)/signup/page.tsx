@@ -164,7 +164,7 @@ export default function page() {
                                 <FormItem>
                                     <FormLabel>Password</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="password" {...field}
+                                        <Input placeholder="password" type="password" {...field}
 
                                         />
                                     </FormControl>
@@ -174,9 +174,12 @@ export default function page() {
                         />
                         <Button className="w-full" type="submit">
                             {
-                                issubmitting ? (
-                                    <Loader2 className="mr-6 animate-spin">Please wait</Loader2>
-                                ) : "Sign up"
+                                //use of loader with a field in lucide react library.
+                                issubmitting ? (<>
+                                
+                                    <Loader2 className="mr-2 animate-spin" />
+                                    Please wait
+                                  </>) : "Sign up"
                             }
                         </Button>
                     </form>
