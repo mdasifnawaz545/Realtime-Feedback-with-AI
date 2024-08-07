@@ -1,3 +1,5 @@
+"use client";
+
 import { signInSchema } from '@/schemas/signInSchema'
 import * as z from 'zod'
 import { useForm } from 'react-hook-form'
@@ -66,39 +68,23 @@ function page() {
         <div className="text-center">
           <h1 className="text-xl
                      font-extrabold w-full tracking-wider lg:text-2xl mb-6">Join Relatime Feedback</h1>
-          <p className="mb-4">Sign up to start your ananoymous adventure</p>
+          <p className="mb-4">Sign In to start your ananoymous adventure</p>
         </div>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-8">
+          <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
             <FormField
               control={form.control}
               name="identifier"
               //mechanism of the form i.e. render
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Username</FormLabel>
+                  <FormLabel>Email/Username</FormLabel>
                   <FormControl>
-                    <Input placeholder="username" {...field}
+                    <Input placeholder="email or username" {...field}
 
                     />
                   </FormControl>
 
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="password"
-              //mechanism of the form i.e. render
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Email</FormLabel>
-                  <FormControl>
-                    <Input placeholder="your-email@gmail.com" {...field}
-                    />
-                  </FormControl>
-                  <p className="text-xs text-blue-500">We'll send you a verification Code</p>
                   <FormMessage />
                 </FormItem>
               )}
@@ -111,7 +97,7 @@ function page() {
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input placeholder="password" type="password" {...field}
+                    <Input placeholder="password" required type="password" {...field}
 
                     />
                   </FormControl>
