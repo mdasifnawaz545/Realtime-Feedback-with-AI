@@ -1,22 +1,22 @@
-'use client'
+'use client';
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
 import Link from "next/link"
 import { useEffect, useState } from "react"
-import { useDebounceValue } from 'usehooks-ts'
+import { useDebounceCallback, useDebounceValue } from 'usehooks-ts'
 import axios, { AxiosError } from 'axios'
 import { useToast } from "@/components/ui/use-toast"
 import { useRouter } from "next/navigation"
 import { signUpSchema } from "@/schemas/signUpSchema"
-import { API_Response } from "../../../../../types"
+import { API_Response } from "../../../../types"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Loader2 } from "lucide-react"
 
 
-const page = async () => {
+export default function page() {
     const [username, setUsername] = useState<string>('username');
     const [usernameMessage, setUsernameMessage] = useState('')
 
@@ -25,7 +25,7 @@ const page = async () => {
 
     const [issubmitting, setIssubmitting] = useState(false);
 
-    const usernameDebounce = useDebounceValue(username, 500);
+    const usernameDebounce = useDebounceCallback(setUsername, 500);
     //we are using a set debounceValue reacthookts in order to control a state varible for the assignnig the value to that variable i.e. by using this  we are taking control on the variable and saying that we are dedupeing  the username so you assign them value not immediately but after some delay, As a result it will reduce the load from the server.
 
     const { toast } = useToast();
@@ -46,11 +46,11 @@ const page = async () => {
 
     useEffect(() => {
         const checkUniqueUsername = async () => {
-            if (usernameDebounce) {
+            if (username) {
                 setIschekingUsername((prev) => prev = true);
                 setUsernameMessage('');
                 try {
-                    const uniqueUsernameResponse = await axios.get(`/api/check-username?username=${usernameDebounce}`);
+                    const uniqueUsernameResponse = await axios.get(`/api/check-username?username=${username}`);
                     console.log(uniqueUsernameResponse);
                     setUsernameMessage(uniqueUsernameResponse.data.message);
                 } catch (error) {
@@ -63,7 +63,7 @@ const page = async () => {
         }
         checkUniqueUsername();
 
-    }, [usernameDebounce]);
+    }, [username]);
 
     const handleSubmit = async (data: z.infer<typeof signUpSchema>) => {
         setIssubmitting(true);
@@ -94,10 +94,10 @@ const page = async () => {
 
     return (
         <div className="flex justify-center items-center min-h-screen bg-gray-100">
-            <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-md">
+            <div className="scale-95 max-w-md p-8 space-y-6 bg-white rounded-lg shadow-lg">
                 <div className="text-center">
-                    <h1 className="texte-4xl
-                     font-extrabold tracking-tighter lg:text-5xl mb-6">Join Relatime Feedback</h1>
+                    <h1 className="text-xl
+                     font-extrabold w-full tracking-wider lg:text-2xl mb-6">Join Relatime Feedback</h1>
                     <p className="mb-4">Sign up to start your ananoymous adventure</p>
                 </div>
                 <Form {...form}>
@@ -114,14 +114,28 @@ const page = async () => {
                                             onChange={
                                                 (e) => {
                                                     field.onChange(e);
-                                                    setUsername(e.target.value);
+                                                    usernameDebounce(e.target.value);
                                                 }
                                             }
                                         />
                                     </FormControl>
-                                    <FormDescription>
-                                        This is your public display name.
-                                    </FormDescription>
+                                    {
+                                        isCheckingUsername && <Loader2 className="animate-spin" />
+
+                                        // usernameMessage === "Username is unique" ?
+                                        // (<p className="text-sm text-green-500">username is available</p>) :
+                                        // (<p className="text-xs text-red-500">username is not available</p>)
+                                        // if( usernameMessage === "Username is unique"){
+                                        //     <p className="text-sm text-green-500">username is available</p>
+                                        // }
+                                        // else{
+                                        //     <p className="text-xs text-red-500">username is not available</p>
+                                        //     setUsername('');
+                                        // }
+
+                                        //why the above code is not working
+                                    }
+                                    <p className={`text-xs ${usernameMessage === "Username is unique" ? "text-green-500" : "text-red-500"}`}>{usernameMessage}</p>
                                     <FormMessage />
                                 </FormItem>
                             )}
@@ -134,12 +148,10 @@ const page = async () => {
                                 <FormItem>
                                     <FormLabel>Email</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="youremail@gmail.com" {...field}
+                                        <Input placeholder="your-email@gmail.com" {...field}
                                         />
                                     </FormControl>
-                                    <FormDescription>
-                                        This is your public display name.
-                                    </FormDescription>
+                                    <p className="text-xs text-blue-500">We'll send you a verification Code</p>
                                     <FormMessage />
                                 </FormItem>
                             )}
@@ -156,17 +168,14 @@ const page = async () => {
 
                                         />
                                     </FormControl>
-                                    <FormDescription>
-                                        This is your public display name.
-                                    </FormDescription>
                                     <FormMessage />
                                 </FormItem>
                             )}
                         />
-                        <Button type="submit">
+                        <Button className="w-full" type="submit">
                             {
                                 issubmitting ? (
-                                    <Loader2 className="mr-6">Please wait</Loader2>
+                                    <Loader2 className="mr-6 animate-spin">Please wait</Loader2>
                                 ) : "Sign up"
                             }
                         </Button>
@@ -175,7 +184,7 @@ const page = async () => {
                 <div className="text-center">
                     <p>
                         Already have an account ?&nbsp;<span>
-                            <Link href="/sign-in">Sign in</Link>
+                            <Link className="text-blue-500 hover:underline hover:text-blue-800" href="/sign-in">Sign in</Link>
                         </span>
                     </p>
                 </div>
@@ -184,5 +193,3 @@ const page = async () => {
         </div>
     )
 }
-
-export default page
