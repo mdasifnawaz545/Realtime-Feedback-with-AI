@@ -51,7 +51,7 @@ export default function page() {
                 setUsernameMessage('');
                 try {
                     const uniqueUsernameResponse = await axios.get(`/api/check-username?username=${username}`);
-                    console.log(uniqueUsernameResponse);
+                    // console.log(uniqueUsernameResponse);
                     setUsernameMessage(uniqueUsernameResponse.data.message);
                 } catch (error) {
                     const axiosError = error as AxiosError<API_Response>;
@@ -76,7 +76,7 @@ export default function page() {
             router.replace(`/verify/${username}`)
             setIssubmitting(false);
             //how the data is coming inside the response by using an axios through the backend will see by console.log() the response of the userResponse.
-            console.log(userResponse)
+            // console.log(userResponse)
         } catch (error) {
             const axiosError = error as AxiosError<API_Response>;
             let errorMessage = axiosError.response?.data.message;

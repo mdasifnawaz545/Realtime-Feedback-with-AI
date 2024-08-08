@@ -23,13 +23,15 @@ export async function GET(request: Request) {
         // Some times when we are using the concept of Aggregation in MongoDB then it will arise an error as the datatype of a particular value is not of specific mongodb type so in order to handle this issue we are explcitely going to  assign a datatype of mongoose to the value, which we are going to use in the aggregation.
 
         const userID = new mongoose.Types.ObjectId(user._id);
+        
 
         const dbUser = await UserModel.aggregate([
-            { $match: { id: userID } },
+            { $match: { _id: userID } },
             { $unwind: '$messages' },
-            { $sort: { 'messages.createdAt': 1 } },
+            { $sort: { 'messages.createdAt': -1 } },
             { $group: { _id: '$id', message: { $push: '$messages' } } }
         ]);
+        
         if (!dbUser || dbUser.length === 0) {
             return Response.json({
                 success: false,
@@ -42,7 +44,7 @@ export async function GET(request: Request) {
         return Response.json({
             success: true,
             message: "Messages Found for the user",
-            messages: dbUser[0].messages,
+            messages: dbUser[0].message,
 
         },{
             status:200,

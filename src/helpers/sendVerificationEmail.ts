@@ -16,7 +16,7 @@ export async function sendVerificaitonEmail(username: string, email: string, ver
         }
 
     } catch (err) {
-        console.log(`Email has not been sent! Try again later...`);
+        // console.log(`Email has not been sent! Try again later...`);
         return {
             success: false,
             message: `Email has not been sent`

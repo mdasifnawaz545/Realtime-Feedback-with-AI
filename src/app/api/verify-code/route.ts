@@ -1,17 +1,24 @@
 import DBConnection from "@/lib/dbConnection";
 import UserModel from "@/model/User";
+import { User } from "../../../../types";
 
 export async function POST(request: Request) {
     await DBConnection();
     try {
         let { username, verificationCode } = await request.json();
+        // console.log(verificationCode);
         // Here we are using decoder to decode the username which we are getting so that if browser by default sets an %20 for the spaces so that we can easily manage them.
         const decodeUsername = decodeURIComponent(username)
+        console.log(decodeUsername)
         const user = await UserModel.findOne({ username: decodeUsername });
+        console.log(user)
         if (user) {
             let isCodeVerified = user.verifyCode === verificationCode;
             let isCodeNotExpires = new Date(user.verifyCodeExpires) > new Date();
+            console.log(isCodeVerified)
+            console.log(isCodeNotExpires);
             if (isCodeVerified && isCodeNotExpires) {
+                console.log("Salaam")
                 user.verified = true;
                 user.save();
                 return Response.json({

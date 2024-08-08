@@ -26,11 +26,13 @@ export async function POST(request: Request) {
         for (let i = 0; i < 6; i++) {
             sixDigitCode = sixDigitCode + Math.floor((Math.random() * 10)) as string;
         }
+
         const hashedPassword = await bcryptjs.hash(password, 10);
         const expires = new Date();
         expires.setHours(expires.getHours() + 1);
+        console.log(userVerifiedByEmail);
         if (userVerifiedByEmail) {
-            if (await UserModel.findOne({ $and: [{ email: email }, { verified: true }] })) {
+            if (await UserModel.findOne({ $and: [{ email }, { verified: true }] })) {
                 return Response.json({
                     success: false,
                     message: 'User is already registered'
@@ -52,25 +54,22 @@ export async function POST(request: Request) {
             }
 
         }
-        else {
 
-            // Sends the Verification Code as well as save the user in the Database.
 
-            const newUser = new UserModel({
-                username,
-                email,
-                password: hashedPassword,
-                verifyCode: sixDigitCode,
-                verifyCodeExpires: expires,
-                verified: false,
-                isAcceptingMessage: true,
-                messages: [],
-            }
-            );
+        // Sends the Verification Code as well as save the user in the Database.
 
-            await newUser.save();
-
+        const newUser = new UserModel({
+            username,
+            email,
+            password: hashedPassword,
+            verifyCode: sixDigitCode,
+            verifyCodeExpires: expires,
+            verified: false,
+            isAcceptingMessage: true,
+            messages: [],
         }
+        );
+        await newUser.save();
 
         const emailResponse = await sendVerificaitonEmail(username, email, sixDigitCode);
         if (!emailResponse.success) {

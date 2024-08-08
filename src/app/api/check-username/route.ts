@@ -17,7 +17,7 @@ export async function GET(request: Request) {
         const queryParam = {
             username: searchParams.get('username')
         }
-        console.log(queryParam.username)
+        // console.log(queryParam.username)
         // Validating from Zod
         let validateUsername = userSchemaQuery.safeParse(queryParam)
         if (!validateUsername.success) {

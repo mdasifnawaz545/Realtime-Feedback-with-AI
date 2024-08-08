@@ -26,6 +26,7 @@ function page() {
   })
   const handleSubmit = async (data: z.infer<typeof signInSchema>) => {
     try {
+      setIssubmitting(true)
       const loginResponse = await signIn('credentials', {
         //after login authjs will automatically redirect to a specific path so we are telling authjs to do not redirect to any page after successfull login i am here to handle it explicitely.
         redirect: false,
@@ -39,16 +40,18 @@ function page() {
           variant: "destructive"
         })
       }
-      console.log(loginResponse)
-      if(loginResponse?.url) {
+      // console.log(loginResponse)
+      if (loginResponse?.url) {
         toast({
           title: "Success",
           description: "Login Successfully",
           variant: "default"
         })
+        setIssubmitting(false)
+
         router.replace('/dashboard')
       }
-      
+
 
     } catch (error) {
       const errorMsg = error as AxiosError<API_Response>

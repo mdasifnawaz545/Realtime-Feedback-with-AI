@@ -10,12 +10,13 @@ const connection: ConnectionObject = {}
 async function DBConnection(): Promise<any> {
     if (!connection.isConnected) {
         try {
-           const db = await mongoose.connect(process.env.MONGO_ATLAS_URL as string)
-           console.log(db)
-           connection.isConnected =  db.connections[0].readyState
+            const db = await mongoose.connect(process.env.MONGO_ATLAS_URL as string)
+            //    console.log(db)
+            connection.isConnected = db.connections[0].readyState
         } catch (error) {
-            console.log("Error while connecting ", error);
-            process.exit(1); // It is used to exit from the process entirely if database is not connected.
+            // console.log("Error while connecting ", error);
+            //process.exit(1); // It is used to exit from the process entirely if database is not connected.
+            console.log("Error")
         }
     }
     else {

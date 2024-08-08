@@ -10,10 +10,10 @@ function Navbar() {
     const { data: session } = useSession();
     const user: User = session?.user as User
     return (
-        <div className=''>
-            <nav className='flex items-center justify-between px-2 w-full h-14 shadow-lg '>
+        
+            <nav className='flex border-b-2 items-center justify-between px-6 w-full h-14 shadow-lg '>
                 <div>
-                    <a href="/dashboard"><h1 className='text-xl text-bold tracking-widest text-gray-900'>Realtime <span className='text-xl text-gray-500'>Feedback</span></h1></a>
+                    <a href="/dashboard"><h1 className='text-xl font-bold tracking-wide text-black'>Realtime Feedback.</h1></a>
                 </div>
                 <div>
                     {
@@ -21,7 +21,7 @@ function Navbar() {
                     }
                 </div>
             </nav>
-        </div>
+        
     )
 }
 

@@ -47,6 +47,7 @@ function page({ params: { username } }: Props) {
         }
 
         try {
+            console.log(verificationCode)
             const verificationResponse = await axios.post('/api/verify-code', { username, verificationCode })
             toast({
                 title: "Failed",

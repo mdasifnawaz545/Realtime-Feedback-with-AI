@@ -7,7 +7,7 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card"
-
+import dayjs from 'dayjs';
 import {
     AlertDialog,
     AlertDialogAction,
@@ -25,25 +25,24 @@ import { API_Response, Message } from "../../types"
 import axios, { AxiosError } from "axios"
 import { title } from "process"
 import { useToast } from "./ui/use-toast"
+import { JSXElementConstructor, ReactNode } from "react";
 
 type Props = {
-    params: {
-        message: Message,
-        func: (messageID: string) => void
-    }
+    message: Message,
+    func: (messageID: string) => void;
 }
 
-function MessageCard({ params: { message, func } }: Props) {
+export function MessageCard({ message, func }: Props): any {
 
     const { toast } = useToast();
-
     const handleDeleteMessage = async () => {
         try {
             const deleteResponse = await axios.delete<API_Response>(`api/delete-message/${message._id}`);
             if (deleteResponse.data.success) {
+                func(message.id);
                 toast({
                     title: "Success",
-                    description: deleteResponse.data.message;
+                    description: deleteResponse.data.message
                 })
             }
 
@@ -58,36 +57,37 @@ function MessageCard({ params: { message, func } }: Props) {
 
         return (
             <Card>
-                <CardHeader>
-                    <CardTitle>Card Title</CardTitle>
-                    <CardDescription>Card Description</CardDescription>
-                </CardHeader>
-                <CardContent>
-                    <p>Card Content</p>
-                </CardContent>
-                <CardFooter>
-                    <AlertDialog>
-                        <AlertDialogTrigger asChild>
-                            <Button variant="destructive"><><X className="mr-1 h-5 w-5" />Delete</></Button>
-                        </AlertDialogTrigger>
-                        <AlertDialogContent>
-                            <AlertDialogHeader>
-                                <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-                                <AlertDialogDescription>
-                                    This action cannot be undone. This will permanently delete your
-                                    messages and remove the data from our servers.
-                                </AlertDialogDescription>
-                            </AlertDialogHeader>
-                            <AlertDialogFooter>
-                                <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                <AlertDialogAction onClick={() => { handleDeleteMessage() }}>Continue</AlertDialogAction>
-                            </AlertDialogFooter>
-                        </AlertDialogContent>
-                    </AlertDialog>
-                </CardFooter>
-            </Card>
-
+            <CardHeader>
+                <CardTitle>Message From Anonymous</CardTitle>
+                <CardDescription>{message.message}</CardDescription>
+                <div className="text-sm">
+                    {dayjs(message.createdAt).format('MMM D, YYYY h:mm A')}
+                </div>
+            </CardHeader>
+            <CardContent>
+                <p>Card Content</p>
+            </CardContent>
+            <CardFooter>
+                <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                        <Button variant="destructive"><><X className="mr-1 h-5 w-5" />Delete</></Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                        <AlertDialogHeader>
+                            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                            <AlertDialogDescription>
+                                This action cannot be undone. This will permanently delete your
+                                messages and remove the data from our servers.
+                            </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                            <AlertDialogAction onClick={() => { handleDeleteMessage() }}><X />Delete</AlertDialogAction>
+                        </AlertDialogFooter>
+                    </AlertDialogContent>
+                </AlertDialog>
+            </CardFooter>
+        </Card>
         )
     }
 }
-export default MessageCard
