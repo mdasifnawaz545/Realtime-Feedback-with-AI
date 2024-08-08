@@ -3,7 +3,7 @@ import UserModel from "@/model/User";
 import { Message } from "../../../../types";
 import { ModifiedPathsSnapshot, Document, Model, Types, ClientSession, DocumentSetOptions, QueryOptions, UpdateQuery, AnyObject, PopulateOptions, MergeType, Query, SaveOptions, ToObjectOptions, FlattenMaps, Require_id, UpdateWithAggregationPipeline, pathsToSkip, Error } from "mongoose";
 
-export async function PSOT(request: Request) {
+export async function POST(request: Request) {
     try {
         await DBConnection;
         const { username, message } = await request.json();
