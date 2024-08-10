@@ -12,10 +12,10 @@ export async function POST(request: Request) {
         await DBConnection();
         const session = await getServerSession(authOptions);
         const user: User = session?.user as User
-        const { acceptingMessage } = await request.json();
+        const { acceptMessages } = await request.json();
         const userId = user._id;
-        if (session && user) {
-            let updatedValueOfUser = await UserModel.findByIdAndUpdate(userId, { isAcceptingMessage: acceptingMessage }, { new: true });
+        if (session || user) {
+            let updatedValueOfUser = await UserModel.findByIdAndUpdate(userId, { isAcceptingMessage: acceptMessages }, { new: true });
             if (updatedValueOfUser) {
                 return Response.json({
                     success: true,
@@ -63,7 +63,7 @@ export async function GET(request: Request) {
         const session = await getServerSession(authOptions);
         const user: User = session?.user as User;
         const userId = new mongoose.Types.ObjectId(user._id);
-        if (session && user) {
+        if (session || user) {
             const databaseUser = await UserModel.findById(userId);
             if (!databaseUser) {
                 return Response.json({

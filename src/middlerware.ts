@@ -6,11 +6,11 @@ import { getToken } from "next-auth/jwt";
 export async function middleware(request: NextRequest) {
 
     const token = await getToken({ req: request });
-    const url = request.nextUrl
+    const url = request.nextUrl // Next url means where you want to go.
 
     if (token &&
-        (url.pathname.startsWith('/auth/signin') ||
-            url.pathname.startsWith('/auth/signup') ||
+        (url.pathname.startsWith('/signin') ||
+            url.pathname.startsWith('/signup') ||
             url.pathname.startsWith('/verify') ||
             url.pathname.startsWith('/dashboard') ||
             url.pathname.startsWith('/'))) {
@@ -24,8 +24,8 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-    matcher: ['/auth/signin',
-        '/auth/signup',
+    matcher: ['/signin',
+        'signup',
         '/dashboard/:path*',
         '/verify/:path*',
         '/'

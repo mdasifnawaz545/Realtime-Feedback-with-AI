@@ -16,6 +16,7 @@ import { Switch } from '@/components/ui/switch';
 import { Separator } from '@/components/ui/separator';
 import { Loader2, RefreshCcw } from 'lucide-react';
 import { MessageCard } from '@/components/MessageCard';
+import messageArray from '../../../messageArray.json'
 
 export default function page() {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -25,10 +26,10 @@ export default function page() {
   const user: User = session?.user as User;
   const { toast } = useToast();
 
-  console.log(messages)
   if (!session || !session.user) {
     toast({
-
+      title: "user not found",
+      description: "User not found"
     })
   }
 
@@ -42,9 +43,6 @@ export default function page() {
 
   const form = useForm<z.infer<typeof acceptMessageSchema>>({
     resolver: zodResolver(acceptMessageSchema),
-    defaultValues: {
-      acceptMessages: true,
-    }
   })
 
   const { register, watch, setValue } = form;
@@ -56,9 +54,7 @@ export default function page() {
     try {
       setIsMessageLoading(true)
       setIsSwitchLoading(false)
-      console.log("Fetch Message Reached")
       const messageArray = await axios.get<API_Response>('/api/get-messages');
-      console.log(messageArray.data)
       setMessages(messageArray.data.messages as Message[] || [])
       if (refresh) {
         toast({
@@ -66,7 +62,7 @@ export default function page() {
           description: "Message Refreshed Successfully"
         })
       }
-      else{
+      else {
         toast({
           title: "Success",
           description: "Message Refreshed Successfully"
@@ -83,7 +79,7 @@ export default function page() {
       setIsMessageLoading(false);
       setIsSwitchLoading(false);
     }
-  }, [setIsMessageLoading, setMessages,toast])
+  }, [setIsMessageLoading, setMessages])
 
 
   const fetchAcceptMessages = useCallback(async () => {
@@ -105,7 +101,7 @@ export default function page() {
     finally {
       setIsSwitchLoading(false);
     }
-  }, [setValue,toast])
+  }, [setValue])
 
 
   // Fetch initial state from the server
@@ -113,7 +109,7 @@ export default function page() {
     if (!session || !session.user) return;
     fetchMessage();
     fetchAcceptMessages();
-  }, [session, setValue, toast, fetchAcceptMessages, fetchMessage]);
+  }, [session, setValue, fetchAcceptMessages, fetchMessage]);
 
 
   // Handling the Switch for accepting the messages.
@@ -169,7 +165,7 @@ export default function page() {
       </div>
     </>
   }
-  console.log(messages)
+  console.log(messageArray)
 
   return (
     <div className="my-8 mx-4 md:mx-8 lg:mx-auto p-6 bg-white rounded w-full max-w-6xl">
@@ -217,10 +213,9 @@ export default function page() {
       </Button>
       <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-6">
         {
-          messages.length ? (messages.map((message, index) => (
-            <MessageCard key={message.id} message={message} func={handleDeleteEfficiently} />
-          ))) : (<h1 className='text-2xl font-bold'>Message Not Found</h1>)
-
+          //  (messageArray.map((message, index) => (
+          //   <MessageCard key={index} message={message} func={handleDeleteEfficiently} />
+          // )))
         }
       </div>
     </div>
