@@ -1,13 +1,17 @@
 import DBConnection from "@/lib/dbConnection";
 import UserModel from "@/model/User";
 import { Message } from "../../../../types";
-import { ModifiedPathsSnapshot, Document, Model, Types, ClientSession, DocumentSetOptions, QueryOptions, UpdateQuery, AnyObject, PopulateOptions, MergeType, Query, SaveOptions, ToObjectOptions, FlattenMaps, Require_id, UpdateWithAggregationPipeline, pathsToSkip, Error } from "mongoose";
+
 
 export async function POST(request: Request) {
     try {
+        console.log("Reauest 1")
         await DBConnection;
         const { username, message } = await request.json();
         const user = await UserModel.findOne({ username });
+        console.log("Reauest 2")
+    console.log(user)
+
         if (!user) {
             return Response.json({
                 success: false,
@@ -17,29 +21,36 @@ export async function POST(request: Request) {
                 statusText: "User Not Found"
             })
         }
-        if (!user.isAcceptingMessage) {
-            return Response.json({
-                success: false,
-                message: "Currently user is not accepting any messages",
-            }, {
-                status: 500,
-                statusText: "Currently user is not accepting any messages"
-            })
+        else{
+            console.log("Rea")
+            if (!user.isAcceptingMessages) {
+                return Response.json({
+                    success: false,
+                    message: "Currently user is not accepting any messages",
+                }, {
+                    status: 500,
+                    statusText: "Currently user is not accepting any messages"
+                })
+            }
+            else {
+                const messageObject = {
+                    message,
+                    createdAt: new Date()
+                }
+                user.messages.push(messageObject as Message);
+                await user.save();
+                return Response.json({
+                    success: true,
+                    message: "Message Sended Successfully",
+                }, {
+                    status: 200,
+                    statusText: "Message Sended Successfully"
+                })
+            }
         }
-        const messageObject = {
-            message,
-            createdAt: new Date()
-        }
-        user.messages.push(messageObject as Message);
-        await user.save();
-        return Response.json({
-            success: true,
-            message: "Message Sended Successfully",
-        }, {
-            status: 200,
-            statusText: "Message Sended Successfully"
-        })
-    }catch (error) {
+       
+
+    } catch (error) {
         return Response.json({
             success: false,
             message: "Error while Sending the message"

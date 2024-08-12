@@ -7,7 +7,7 @@ interface User extends Document {
     verifyCode: string,
     verifyCodeExpires: Date,
     verified: boolean,
-    isAcceptingMessage: Boolean,
+    isAcceptingMessages: boolean,
     messages: Message[],
 }
 

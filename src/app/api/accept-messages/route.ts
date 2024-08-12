@@ -12,10 +12,11 @@ export async function POST(request: Request) {
         await DBConnection();
         const session = await getServerSession(authOptions);
         const user: User = session?.user as User
-        const { acceptMessages } = await request.json();
+        const { acceptMessage } = await request.json();
+        // const acceptMessageBoolean: boolean = acceptMessage === "true" ? true : false
         const userId = user._id;
         if (session || user) {
-            let updatedValueOfUser = await UserModel.findByIdAndUpdate(userId, { isAcceptingMessage: acceptMessages }, { new: true });
+            let updatedValueOfUser = await UserModel.findByIdAndUpdate(userId, { isAcceptingMessages: acceptMessage }, { new: true });
             if (updatedValueOfUser) {
                 return Response.json({
                     success: true,
@@ -78,7 +79,7 @@ export async function GET(request: Request) {
                 return Response.json({
                     success: true,
                     message: "User Found",
-                    isAcceptingMessages: databaseUser.isAcceptingMessage
+                    isAcceptingMessages: databaseUser.isAcceptingMessages
                 }, {
                     status: 200,
                     statusText: "User Status Found"

@@ -49,7 +49,7 @@ export async function POST(request: Request) {
                     userVerifiedByEmail.verifyCode = sixDigitCode,
                     userVerifiedByEmail.verifyCodeExpires = expires,
                     userVerifiedByEmail.verified = false,
-                    userVerifiedByEmail.isAcceptingMessage = true,
+                    userVerifiedByEmail.isAcceptingMessages = true,
                     userVerifiedByEmail.messages = []
             }
 
@@ -65,7 +65,7 @@ export async function POST(request: Request) {
             verifyCode: sixDigitCode,
             verifyCodeExpires: expires,
             verified: false,
-            isAcceptingMessage: true,
+            isAcceptingMessages: true,
             messages: [],
         }
         );

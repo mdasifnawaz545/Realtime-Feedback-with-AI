@@ -1,10 +1,10 @@
-'use client';
+"use client";
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
 import Link from "next/link"
 import { useEffect, useState } from "react"
-import { useDebounceCallback, useDebounceValue } from 'usehooks-ts'
+import { useDebounceCallback } from 'usehooks-ts'
 import axios, { AxiosError } from 'axios'
 import { useToast } from "@/components/ui/use-toast"
 import { useRouter } from "next/navigation"
@@ -25,7 +25,7 @@ export default function page() {
 
     const [issubmitting, setIssubmitting] = useState(false);
 
-    const usernameDebounce = useDebounceCallback(setUsername, 500);
+    const usernameDebounce = useDebounceCallback(setUsername, 300);
     //we are using a set debounceValue reacthookts in order to control a state varible for the assignnig the value to that variable i.e. by using this  we are taking control on the variable and saying that we are dedupeing  the username so you assign them value not immediately but after some delay, As a result it will reduce the load from the server.
 
     const { toast } = useToast();
@@ -176,10 +176,10 @@ export default function page() {
                             {
                                 //use of loader with a field in lucide react library.
                                 issubmitting ? (<>
-                                
+
                                     <Loader2 className="mr-2 animate-spin" />
                                     Please wait
-                                  </>) : "Sign up"
+                                </>) : "Sign up"
                             }
                         </Button>
                     </form>

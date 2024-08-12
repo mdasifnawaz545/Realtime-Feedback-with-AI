@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { Mail } from 'lucide-react'; // Assuming you have an icon for messages
+import { Car, Mail } from 'lucide-react'; // Assuming you have an icon for messages
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import Autoplay from 'embla-carousel-autoplay'
 import messages from '@/messages.json';
@@ -29,7 +29,6 @@ export default function Home() {
             Realtime Feedback - Where your identity remains a secret.
           </p>
         </section>
-
        
         <Carousel
          plugins={[Autoplay({delay:3000})]}

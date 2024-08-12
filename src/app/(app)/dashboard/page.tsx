@@ -17,9 +17,16 @@ import { Separator } from '@/components/ui/separator';
 import { Loader2, RefreshCcw } from 'lucide-react';
 import { MessageCard } from '@/components/MessageCard';
 import messageArray from '../../../messageArray.json'
+import Card from '@/components/Card';
+
+type messageArr = {
+  createdAt: Date,
+  message: string,
+  _id: string,
+}
 
 export default function page() {
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [messages, setMessages] = useState<messageArr[]>([]);
   const [isMessageLoading, setIsMessageLoading] = useState(false);
   const [isSwitchLoading, setIsSwitchLoading] = useState(false);
   const { data: session } = useSession();
@@ -35,7 +42,26 @@ export default function page() {
 
   //It is an optimised way to do that because internally from message card iteself the message is going to be deleted but we also want to update it in the dashboard even if the actual message got deleted from the backend due to some kind of error occured in backend. 
 
-  const handleDeleteEfficiently = (messageID: string) => {
+  const handleDeleteEfficiently = async (messageID: string) => {
+
+    try {
+      const deleteResponse = await axios.delete<API_Response>(`api/delete-message/${messageID}`);
+      console.log(deleteResponse)
+      if (deleteResponse.data.success) {
+        toast({
+          title: "Success",
+          description: deleteResponse.data.message
+        })
+      }
+
+    } catch (error) {
+      const axiosError = error as AxiosError<API_Response>;
+      toast({
+        title: "Success",
+        description: axiosError.response?.data.message
+      })
+
+    }
     setMessages((prev) => (
       prev.filter((el) => (el._id !== messageID))
     ))
@@ -55,7 +81,9 @@ export default function page() {
       setIsMessageLoading(true)
       setIsSwitchLoading(false)
       const messageArray = await axios.get<API_Response>('/api/get-messages');
-      setMessages(messageArray.data.messages as Message[] || [])
+      setMessages(messageArray.data.messages as messageArr[])
+      console.log(messageArray)
+      console.log(messages)
       if (refresh) {
         toast({
           title: "Success",
@@ -89,6 +117,7 @@ export default function page() {
       const acceptMessageResponse = await axios.get<API_Response>('/api/accept-messages');
 
       setValue('acceptMessages', acceptMessageResponse.data.isAcceptingMessages as boolean);
+      console.log(acceptMessageResponse.data.isAcceptingMessages)
 
     } catch (error) {
       const axiosError = error as AxiosError<API_Response>;
@@ -109,7 +138,8 @@ export default function page() {
     if (!session || !session.user) return;
     fetchMessage();
     fetchAcceptMessages();
-  }, [session, setValue, fetchAcceptMessages, fetchMessage]);
+    console.log(messages);
+  }, [session, fetchMessage]);
 
 
   // Handling the Switch for accepting the messages.
@@ -117,14 +147,15 @@ export default function page() {
   const handleSwitch = async () => {
     await DBConnection();
     try {
-      const response = await axios.post<API_Response>('/api/accept-messages', { acceptMessages: !acceptMessages });
+      const acceptMessage=!acceptMessages;
+      const response = await axios.post<API_Response>('/api/accept-messages', { acceptMessage});
 
       if (response.data.success) {
         //setValue is only for setting the value on the client hand side.
         setValue('acceptMessages', !acceptMessages)
         toast({
           title: "Success",
-          description: response.data.message
+          description: "Message Acceptance changed"
         })
       } else {
         toast({
@@ -165,7 +196,6 @@ export default function page() {
       </div>
     </>
   }
-  console.log(messageArray)
 
   return (
     <div className="my-8 mx-4 md:mx-8 lg:mx-auto p-6 bg-white rounded w-full max-w-6xl">
@@ -211,11 +241,12 @@ export default function page() {
           <RefreshCcw className="h-4 w-4" />
         )}
       </Button>
-      <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="p-4 flex flex-wrap items-center justify-center gap-4">
         {
-          //  (messageArray.map((message, index) => (
-          //   <MessageCard key={index} message={message} func={handleDeleteEfficiently} />
-          // )))
+          (messages.map((message, index) => (
+            <Card id={message._id} message={message} func={handleDeleteEfficiently} />
+          )))
+
         }
       </div>
     </div>

@@ -28,7 +28,11 @@ import { useToast } from "./ui/use-toast"
 import { JSXElementConstructor, ReactNode } from "react";
 
 type Props = {
-    message: Message,
+    message: {
+        _id:string,
+        message: string,
+        createdAt: Date
+    },
     func: (messageID: string) => void;
 }
 
@@ -39,7 +43,7 @@ export function MessageCard({ message, func }: Props): any {
         try {
             const deleteResponse = await axios.delete<API_Response>(`api/delete-message/${message._id}`);
             if (deleteResponse.data.success) {
-                func(message.id);
+                func(message._id);
                 toast({
                     title: "Success",
                     description: deleteResponse.data.message
@@ -57,37 +61,37 @@ export function MessageCard({ message, func }: Props): any {
 
         return (
             <Card>
-            <CardHeader>
-                <CardTitle>Message From Anonymous</CardTitle>
-                <CardDescription>{message.message}</CardDescription>
-                <div className="text-sm">
-                    {dayjs(message.createdAt).format('MMM D, YYYY h:mm A')}
-                </div>
-            </CardHeader>
-            <CardContent>
-                <p>Card Content</p>
-            </CardContent>
-            <CardFooter>
-                <AlertDialog>
-                    <AlertDialogTrigger asChild>
-                        <Button variant="destructive"><><X className="mr-1 h-5 w-5" />Delete</></Button>
-                    </AlertDialogTrigger>
-                    <AlertDialogContent>
-                        <AlertDialogHeader>
-                            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-                            <AlertDialogDescription>
-                                This action cannot be undone. This will permanently delete your
-                                messages and remove the data from our servers.
-                            </AlertDialogDescription>
-                        </AlertDialogHeader>
-                        <AlertDialogFooter>
-                            <AlertDialogCancel>Cancel</AlertDialogCancel>
-                            <AlertDialogAction onClick={() => { handleDeleteMessage() }}><X />Delete</AlertDialogAction>
-                        </AlertDialogFooter>
-                    </AlertDialogContent>
-                </AlertDialog>
-            </CardFooter>
-        </Card>
+                <CardHeader>
+                    <CardTitle>Message From Anonymous</CardTitle>
+                    <CardDescription>{message.message}</CardDescription>
+                    <div className="text-sm">
+                        {dayjs(message.createdAt).format('MMM D, YYYY h:mm A')}
+                    </div>
+                </CardHeader>
+                <CardContent>
+                    <p>Card Content</p>
+                </CardContent>
+                <CardFooter>
+                    <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                            <Button variant="destructive"><><X className="mr-1 h-5 w-5" />Delete</></Button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                            <AlertDialogHeader>
+                                <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                                <AlertDialogDescription>
+                                    This action cannot be undone. This will permanently delete your
+                                    messages and remove the data from our servers.
+                                </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                <AlertDialogAction onClick={() => { handleDeleteMessage() }}><X />Delete</AlertDialogAction>
+                            </AlertDialogFooter>
+                        </AlertDialogContent>
+                    </AlertDialog>
+                </CardFooter>
+            </Card>
         )
     }
 }
