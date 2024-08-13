@@ -1,5 +1,6 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod"
+import { FcGoogle } from "react-icons/fc";
 import { useForm } from "react-hook-form"
 import * as z from "zod"
 import Link from "next/link"
@@ -14,6 +15,7 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Loader2 } from "lucide-react"
+import { signIn } from "next-auth/react";
 
 
 export default function page() {
@@ -44,6 +46,11 @@ export default function page() {
 
     })
 
+
+    const handleGoogleAuth = async () => {
+        const response = await signIn('google')
+    }
+
     useEffect(() => {
         const checkUniqueUsername = async () => {
             if (username) {
@@ -68,11 +75,12 @@ export default function page() {
     const handleSubmit = async (data: z.infer<typeof signUpSchema>) => {
         setIssubmitting(true);
         try {
-            const userResponse = await axios.post('/api/sign-up', data);
+            const userResponse = await axios.post<API_Response>('/api/sign-up', data);
             toast({
                 title: "Sucesss",
                 description: userResponse.data.message
             })
+
             router.replace(`/verify/${username}`)
             setIssubmitting(false);
             //how the data is coming inside the response by using an axios through the backend will see by console.log() the response of the userResponse.
@@ -99,6 +107,13 @@ export default function page() {
                     <h1 className="text-xl
                      font-extrabold w-full tracking-wider lg:text-2xl mb-6">Join Relatime Feedback</h1>
                     <p className="mb-4">Sign up to start your ananoymous adventure</p>
+                </div>
+                <div className="flex items-center justify-center">
+                    <Button onClick={
+                        () => {
+                            handleGoogleAuth()
+                        }
+                    } className="bg-white border text-black hover:text-white"><FcGoogle className="w-full h-full" />&nbsp;&nbsp;Sign in with Google</Button>
                 </div>
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-8">

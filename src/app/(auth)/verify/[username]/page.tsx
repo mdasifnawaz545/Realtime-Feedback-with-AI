@@ -13,6 +13,7 @@ import axios, { AxiosError } from "axios"
 import { API_Response } from "../../../../../types"
 import { useState } from "react"
 import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 
 //we are using z.infer in order to assign the data type only because whatever datatype is there it is defined as a zod validation shema so we are assigning that value so we have to extract the datatype first from the zod schema using z.infer
 
@@ -48,13 +49,40 @@ function page({ params: { username } }: Props) {
 
         try {
             console.log(verificationCode)
-            const verificationResponse = await axios.post('/api/verify-code', { username, verificationCode })
-            toast({
-                title: "Failed",
-                description: "Registered successfully",
-                variant: "destructive"
-            })
-            router.replace('/dashboard');
+            const verificationResponse = await axios.post<API_Response>('/api/verify-code', { username, verificationCode })
+            if (verificationResponse.data.success) {
+                toast({
+                    title: "Sucess",
+                    description: "Registered successfully",
+                    variant: "default"
+                })
+                router.replace('/login');
+            }
+            else {
+                toast({
+                    title: "Failed",
+                    description: "Failed to Signup",
+                    variant: "destructive"
+                })
+            }
+            // else {
+
+            //     const loginUser = await signIn('credentials', { redirect: false, identifier: data.email, password: data.password });
+            //     if (loginUser?.url) {
+            //         toast({
+            //             title: "Success",
+            //             description: "Login Successfully"
+            //         })
+            //     }
+            //     else {
+            //         toast({
+            //             title: "Failed",
+            //             description: "Failed to Login"
+            //         })
+            //     }
+
+            // }
+
         } catch (error) {
             const axiosError = error as AxiosError<API_Response>;
             const errMsg = axiosError.response?.data.message;

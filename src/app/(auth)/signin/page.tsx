@@ -62,8 +62,6 @@ function page() {
       })
 
     }
-
-
   }
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
@@ -108,6 +106,7 @@ function page() {
                 </FormItem>
               )}
             />
+            <Link className='text-md hover:underline focus:underline  p-2' href={'/forgot-password'}><p>forgot password ?</p></Link>
             <Button className="w-full" type="submit">
               {
                 isSubmitting ? (<>
