@@ -15,7 +15,6 @@ export async function GET(request: Request) {
     const email = request.url.substring(request.url.lastIndexOf('/') + 1)
     console.log(email)
 
-
     let VerificationCode: string = '';
     if (email) {
         console.log(email)
@@ -47,11 +46,11 @@ export async function GET(request: Request) {
 
 }
 export async function POST(request: Request) {
-    const { email, verificaitonCode, oldPassword, newPassword } = await request.json();
+    const { email, verificationCode, oldPassword, newPassword } = await request.json();
     const hashedOldPassword = bcryptjs.hash(oldPassword, 10);
     const hashednewPassword = bcryptjs.hash(newPassword, 10);
     await DBConnection();
-    const VerfiedUser = await UserModel.findOne({ $and: [{ email }, { password: hashedOldPassword }, { verifyCode: verificaitonCode }] });
+    const VerfiedUser = await UserModel.findOne({ $and: [{ email }, { password: hashedOldPassword }, { verifyCode: verificationCode }] });
     if (!VerfiedUser) {
         return Response.json({
             success: false,

@@ -27,12 +27,12 @@ function ForgotPage() {
     //handling the function of sending the email and verifying the email and then changing the password with a message.
     // const toast = useToast();\
 
-    const passwordChangeResponse: API_Response = await axios.post('/api/forgot-password', { data })
-    if (passwordChangeResponse.success) {
+    const passwordChangeResponse = await axios.post<API_Response>('/api/forgot-password', { data })
+    if (passwordChangeResponse.data.success) {
 
       toast({
         title: "Success",
-        description: passwordChangeResponse.message
+        description: passwordChangeResponse.data.message
       })
 
     }
@@ -94,12 +94,11 @@ function ForgotPage() {
             <FormField
               control={form.control}
               name="verificationCode"
-
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Verification Code</FormLabel>
                   <FormControl>
-                    <Input disabled={!isEmailSubmitting} minLength={6} maxLength={6} placeholder="verificationCode" {...field} />
+                    <Input placeholder="verificationCode" {...field} />
                   </FormControl>
                 </FormItem>
               )}
