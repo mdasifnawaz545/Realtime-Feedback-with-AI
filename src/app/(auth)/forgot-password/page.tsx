@@ -22,12 +22,12 @@ function ForgotPage() {
   })
   const { register, watch, setValue } = form
   const emailId = watch('email')
+
   const handleSubmit = async (data: z.infer<typeof forgotPasswordSchema>) => {
     setIsSubmitting((prev) => prev = !prev)
     //handling the function of sending the email and verifying the email and then changing the password with a message.
     // const toast = useToast();\
-
-    const passwordChangeResponse = await axios.post<API_Response>('/api/forgot-password', { data })
+    const passwordChangeResponse = await axios.post<API_Response>('/api/forgot-password/forgot', { data })
     if (passwordChangeResponse.data.success) {
 
       toast({
@@ -39,7 +39,7 @@ function ForgotPage() {
     else {
       toast({
         title: "Failed",
-        description: passwordChangeResponse.message
+        description: passwordChangeResponse.data.message
       })
     }
     setIsSubmitting((prev) => prev = !prev)
@@ -133,7 +133,7 @@ function ForgotPage() {
               isSubmitting ? (<>
                 <Loader2 className="mr-2 animate-spin" />
                 Please wait
-              </>) : "Sign up"
+              </>) : "Continue"
             }</Button>
           </form>
         </Form>

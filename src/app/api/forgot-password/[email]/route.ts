@@ -47,17 +47,25 @@ export async function GET(request: Request) {
 }
 export async function POST(request: Request) {
     const { email, verificationCode, oldPassword, newPassword } = await request.json();
-    const hashedOldPassword = bcryptjs.hash(oldPassword, 10);
-    const hashednewPassword = bcryptjs.hash(newPassword, 10);
+    const hashedOldPassword = await bcryptjs.hash(oldPassword, 10);
+
+    console.log(email)
+    console.log(verificationCode)
+    console.log(oldPassword)
+    console.log(newPassword)
+    console.log(hashedOldPassword)
+
     await DBConnection();
-    const VerfiedUser = await UserModel.findOne({ $and: [{ email }, { password: hashedOldPassword }, { verifyCode: verificationCode }] });
+    const VerfiedUser = await UserModel.findOne({ $and: [{ email }, { verifyCode: verificationCode }] });
+    console.log(VerfiedUser)
     if (!VerfiedUser) {
         return Response.json({
             success: false,
             message: "Password or Verification code is incorrect"
         })
     }
-    VerfiedUser.password = hashednewPassword as unknown as string;
+    if(await bcryptjs.compare(oldPassword, VerfiedUser.password))
+    VerfiedUser.password = await bcryptjs.hash(newPassword, 10);
     await VerfiedUser.save();
     return Response.json({
         success: true,
