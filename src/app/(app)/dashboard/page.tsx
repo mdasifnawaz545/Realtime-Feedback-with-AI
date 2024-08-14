@@ -107,7 +107,7 @@ export default function Dashboard() {
       setIsMessageLoading(false);
       setIsSwitchLoading(false);
     }
-  }, [setIsMessageLoading, setMessages])
+  }, [setIsMessageLoading, setMessages,toast])
 
 
   const fetchAcceptMessages = useCallback(async () => {
@@ -130,7 +130,7 @@ export default function Dashboard() {
     finally {
       setIsSwitchLoading(false);
     }
-  }, [setValue])
+  }, [setValue, toast])
 
 
   // Fetch initial state from the server
@@ -139,7 +139,7 @@ export default function Dashboard() {
     fetchMessage();
     fetchAcceptMessages();
     console.log(messages);
-  }, [session, fetchMessage]);
+  }, [session, setValue, toast, fetchAcceptMessages, fetchMessage]);
 
 
   // Handling the Switch for accepting the messages.

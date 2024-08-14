@@ -21,10 +21,12 @@ function ForgotPage() {
   const handleSubmit = async (data: z.infer<typeof forgotPasswordSchema>) => {
     setIsSubmitting((prev) => prev = !prev)
     //handling the function of sending the email and verifying the email and then changing the password with a message.
-    const toast = useToast();
+    // const toast = useToast();
     const passwordChangeResponse = await axios.post('/api/forgot-password', { data })
 
+    if(passwordChangeResponse){
 
+    }
 
 
 
