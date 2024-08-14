@@ -16,7 +16,7 @@ async function DBConnection(): Promise<any> {
         } catch (error) {
             // console.log("Error while connecting ", error);
             //process.exit(1); // It is used to exit from the process entirely if database is not connected.
-            console.log("Error")
+            console.log(" DB Error")
         }
     }
     else {
