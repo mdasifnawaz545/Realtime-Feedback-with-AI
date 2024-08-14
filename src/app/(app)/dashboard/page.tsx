@@ -25,7 +25,7 @@ type messageArr = {
   _id: string,
 }
 
-export default function page() {
+export default function Dashboard() {
   const [messages, setMessages] = useState<messageArr[]>([]);
   const [isMessageLoading, setIsMessageLoading] = useState(false);
   const [isSwitchLoading, setIsSwitchLoading] = useState(false);

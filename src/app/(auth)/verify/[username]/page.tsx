@@ -24,7 +24,7 @@ type Props = {
     }
 }
 
-function page({ params: { username } }: Props) {
+function Verify({ params: { username } }: Props) {
     const [submitting, setSubmitting] = useState<boolean>(false);
     const { toast } = useToast();
     const router = useRouter();
@@ -223,4 +223,4 @@ function page({ params: { username } }: Props) {
     )
 }
 
-export default page
+export default Verify

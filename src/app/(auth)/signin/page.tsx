@@ -17,7 +17,7 @@ import axios, { AxiosError } from 'axios'
 import { API_Response } from '../../../../types'
 import { signIn } from 'next-auth/react'
 
-function page() {
+function Signin() {
   const router = useRouter();
   const { toast } = useToast();
   const [isSubmitting, setIssubmitting] = useState(false);
@@ -131,4 +131,4 @@ function page() {
   )
 }
 
-export default page
+export default Signin

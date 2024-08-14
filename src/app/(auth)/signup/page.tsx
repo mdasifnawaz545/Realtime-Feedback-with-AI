@@ -18,7 +18,7 @@ import { Loader2 } from "lucide-react"
 import { signIn } from "next-auth/react";
 
 
-export default function page() {
+export default function Signup() {
     const [username, setUsername] = useState<string>('username');
     const [usernameMessage, setUsernameMessage] = useState('')
 

@@ -12,7 +12,7 @@ import { useToast } from '@/components/ui/use-toast';
 import axios from 'axios';
 import { z } from 'zod';
 
-function page() {
+function ForgotPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const form = useForm<z.infer<typeof forgotPasswordSchema>>({
     resolver: zodResolver(forgotPasswordSchema),
@@ -81,4 +81,4 @@ function page() {
   )
 }
 
-export default page
+export default ForgotPage;
