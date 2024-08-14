@@ -26,7 +26,6 @@ export async function POST(request: Request) {
         for (let i = 0; i < 6; i++) {
             sixDigitCode = sixDigitCode + Math.floor((Math.random() * 10)) as string;
         }
-
         const hashedPassword = await bcryptjs.hash(password, 10);
         const expires = new Date();
         expires.setHours(expires.getHours() + 1);
@@ -41,9 +40,8 @@ export async function POST(request: Request) {
                     statusText: "User is already registered"
                 })
             }
+            // Update the user as he is registered but not verified.
             else {
-                // Update the user as he is registered but not verified.
-
                 userVerifiedByEmail.username = username,
                     userVerifiedByEmail.password = hashedPassword,
                     userVerifiedByEmail.verifyCode = sixDigitCode,
@@ -51,10 +49,17 @@ export async function POST(request: Request) {
                     userVerifiedByEmail.verified = false,
                     userVerifiedByEmail.isAcceptingMessages = true,
                     userVerifiedByEmail.messages = []
+                await userVerifiedByEmail.save();
+                const emailResponse = await sendVerificaitonEmail(username, email, sixDigitCode);
+                if (!emailResponse.success) {
+                    return Response.json({ success: false, message: emailResponse.message }, { status: 500 })
+                }
+                else {
+                    return Response.json({ success: true, message: emailResponse.message }, { status: 200 })
+                }
             }
 
         }
-
 
         // Sends the Verification Code as well as save the user in the Database.
 
@@ -70,6 +75,7 @@ export async function POST(request: Request) {
         }
         );
         await newUser.save();
+
 
         const emailResponse = await sendVerificaitonEmail(username, email, sixDigitCode);
         if (!emailResponse.success) {
