@@ -32,6 +32,14 @@ export default function Dashboard() {
   const { data: session } = useSession();
   const user: User = session?.user as User;
   const { toast } = useToast();
+  const [profileURL, setProfileURL] = useState('');
+
+  const { username } = session?.user as User || {};
+
+  useEffect(() => {
+    const baseURL = `${window.location.protocol}//${window.location.host}`;
+    setProfileURL(`${baseURL}/u/${username}`);
+  }, [username]);
 
   if (!session || !session.user) {
     toast({
@@ -174,11 +182,10 @@ export default function Dashboard() {
   }
 
 
-  const { username } = session?.user as User || {};
 
   //Creating a base url for the user so that anyone with this link is able to send feedback messages.
-  const baseURL = `${window.location.protocol}//${window.location.host}`
-  const profileURL = `${baseURL}/u/${username}`;
+  // const baseURL = `${window.location.protocol}//${window.location.host}`
+  // const profileURL = `${baseURL}/u/${username}`;
 
   const copyToClipboard = () => {
     //In Nextjs or for react just we need window as well to copy an item into the clipboard.``
