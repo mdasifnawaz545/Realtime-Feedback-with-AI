@@ -244,7 +244,7 @@ export default function Dashboard() {
       <div className="p-4 flex flex-wrap items-center justify-center gap-4">
         {
           (messages.map((message, index) => (
-            <Card id={message._id} message={message} func={handleDeleteEfficiently} />
+            <Card id={message._id} message={message} key={index} func={handleDeleteEfficiently} />
           )))
 
         }
