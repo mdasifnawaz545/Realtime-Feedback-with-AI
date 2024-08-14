@@ -168,7 +168,7 @@ export default function Signup() {
                                         <Input placeholder="your-email@gmail.com" {...field}
                                         />
                                     </FormControl>
-                                    <p className="text-xs text-blue-500">We'll send you a verification Code</p>
+                                    <p className="text-xs text-blue-500">We&apos;ll send you a verification Code</p>
                                     <FormMessage />
                                 </FormItem>
                             )}

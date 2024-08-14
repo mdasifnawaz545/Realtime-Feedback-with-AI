@@ -120,7 +120,7 @@ function Signin() {
         </Form>
         <div className="text-center">
           <p>
-            Don't have an account ?&nbsp;<span>
+            Don&apos;t have an account ?&nbsp;<span>
               <Link className="text-blue-500 hover:underline hover:text-blue-800" href="/signup">Sign up</Link>
             </span>
           </p>

@@ -22,7 +22,7 @@ type Props = {
     }
 }
 
-function page({ params: { username } }: Props) {
+function Page({ params: { username } }: Props) {
 
     const [isSending, setIsSending] = useState(false);
     const { toast } = useToast();
@@ -104,4 +104,4 @@ function page({ params: { username } }: Props) {
     )
 }
 
-export default page
+export default Page
