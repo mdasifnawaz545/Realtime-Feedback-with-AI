@@ -106,7 +106,7 @@ function Signin() {
                 </FormItem>
               )}
             />
-            <Link className='text-md hover:underline focus:underline  p-2' href={'/forgot-password'}><p>forgot password ?</p></Link>
+            {/* <Link className='text-md hover:underline focus:underline  p-2' href={'/forgot-password'}><p>forgot password ?</p></Link> */}
             <Button className="w-full" type="submit">
               {
                 isSubmitting ? (<>
