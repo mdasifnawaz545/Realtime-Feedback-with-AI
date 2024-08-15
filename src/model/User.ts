@@ -5,7 +5,6 @@ import { boolean } from "zod";
 
 
 
-
 const userSchema: Schema<User> = new Schema({
     username: {
         type: String,
@@ -40,7 +39,7 @@ const userSchema: Schema<User> = new Schema({
         required: true,
         default: true
     },
-    messages: [messageSchema]
+    messages: [messageSchema] // Schema talks to schema and interface talks to an interface
 })
 
 const UserModel = (mongoose.models.User as mongoose.Model<User>) || (mongoose.model<User>('User', userSchema));

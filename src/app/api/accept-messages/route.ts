@@ -12,7 +12,7 @@ export async function POST(request: Request) {
         await DBConnection();
         const session = await getServerSession(authOptions);
         const user: User = session?.user as User
-        const { acceptMessage } = await request.json();
+        const { acceptMessage }= await request.json();
         // const acceptMessageBoolean: boolean = acceptMessage === "true" ? true : false
         const userId = user._id;
         if (session || user) {
