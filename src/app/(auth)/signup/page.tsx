@@ -20,6 +20,8 @@ import { signIn } from "next-auth/react";
 
 export default function Signup() {
     const [username, setUsername] = useState<string>('username');
+    //useDebounce callback will only taking the reference of the state set part only and then on behalf of that state it is itself going to manage the value of the state and after a certain interval of time it is going to update the value in the referenced value.
+
     const [usernameMessage, setUsernameMessage] = useState('')
 
     const [isCheckingUsername, setIschekingUsername] = useState(false);
@@ -28,7 +30,7 @@ export default function Signup() {
     const [issubmitting, setIssubmitting] = useState(false);
 
     const usernameDebounce = useDebounceCallback(setUsername, 300);
-    //we are using a set debounceValue reacthookts in order to control a state varible for the assignnig the value to that variable i.e. by using this  we are taking control on the variable and saying that we are dedupeing  the username so you assign them value not immediately but after some delay, As a result it will reduce the load from the server.
+    //we are using a set usedebounceCallback reacthookts in order to control a state varible for the assignnig the value to that variable i.e. by using this  we are taking control on the variable and saying that we are dedupeing  the username so you assign them value not immediately but after some delay, As a result it will reduce the load from the server.
 
     const { toast } = useToast();
 

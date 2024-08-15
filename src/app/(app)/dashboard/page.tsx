@@ -41,7 +41,7 @@ export default function Dashboard() {
     setProfileURL(`${baseURL}/u/${username}`);
   }, [username]);
 
-  if (!session || !session.user) {
+  if (!session || !session.user) { // Kindly go through it why the typesafety of this is here.
     toast({
       title: "user not found",
       description: "User not found"
