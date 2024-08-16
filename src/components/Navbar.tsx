@@ -13,7 +13,7 @@ function Navbar() {
 
         <nav className='flex border-b-2 items-center justify-between px-6 w-full h-14 shadow-lg '>
             <div>
-                <a href="/dashboard"><h1 className='text-xl font-bold tracking-wide text-black'>Realtime Feedback.</h1></a>
+                <a href="/"><h1 className='text-xl font-bold tracking-wide text-black'>Realtime Feedback.</h1></a>
             </div>
             <div>
 

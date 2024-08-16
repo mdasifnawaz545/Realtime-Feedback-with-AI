@@ -85,7 +85,7 @@ export default function Signup() {
                 })
             }
 
-            router.replace(`/verify/${username}`)
+            router.push(`/verify/${username}`)
             setIssubmitting(false);
             //how the data is coming inside the response by using an axios through the backend will see by console.log() the response of the userResponse.
             // console.log(userResponse)
@@ -206,7 +206,7 @@ export default function Signup() {
                 <div className="text-center">
                     <p>
                         Already have an account ?&nbsp;<span>
-                            <Link className="text-blue-500 hover:underline hover:text-blue-800" href="/sign-in">Sign in</Link>
+                            <Link className="text-blue-500 hover:underline hover:text-blue-800" href="/signin">Sign in</Link>
                         </span>
                     </p>
                 </div>

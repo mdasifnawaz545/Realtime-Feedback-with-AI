@@ -49,7 +49,7 @@ function Signin() {
         })
         setIssubmitting(false)
 
-        router.replace('/dashboard')
+        router.push('/dashboard')
       }
 
 
