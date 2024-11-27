@@ -5,7 +5,7 @@ import { getToken } from "next-auth/jwt";
 
 export async function middleware(request: NextRequest) {
 
-    const token = await getToken({ req: request });
+    const token = await getToken({ req: request }); // This token is provided by NextAuth to add this as a middleware or mask to the pages where you want to add authentication kind of thing.
     const url = request.nextUrl // This Line means that, i want the address of the URL in the variable url to whom you want to go and this middleware function has called in between.
 
     if (token &&
