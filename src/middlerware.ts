@@ -6,7 +6,7 @@ import { getToken } from "next-auth/jwt";
 export async function middleware(request: NextRequest) {
 
     const token = await getToken({ req: request });
-    const url = request.nextUrl // Next url means where you want to go.
+    const url = request.nextUrl // This Line means that, i want the address of the URL in the variable url to whom you want to go and this middleware function has called in between.
 
     if (token &&
         (url.pathname.startsWith('/signin') ||
