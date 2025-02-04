@@ -1,36 +1,135 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Realtime Feedback
 
-## Getting Started
+Realtime Feedback is a web-based application that allows users to receive anonymous feedback securely. It provides authentication, email verification, AI-assisted feedback suggestions, and real-time dashboard updates.
 
-First, run the development server:
+## 🚀 Features
+- 🔑 **User Registration & Authentication**  
+  - Sign up using an email or a unique username (checked in real-time).  
+  - Secure authentication via NextAuth (Google & username-based login).  
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- 📧 **Email OTP Verification**  
+  - OTP is sent via **Resend** for user verification.  
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- 📊 **Dashboard**  
+  - Displays received feedback messages in real-time.  
+  - Users can **delete** feedback messages.  
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- 📮 **Public URL for Feedback**  
+  - Each user gets a **unique shareable link** to receive feedback anonymously.  
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- 🤖 **AI-Assisted Suggestions**  
+  - OpenAI generates feedback message templates on the public feedback page.  
 
-## Learn More
+- ⚙️ **Feedback Management**  
+  - Users can **disable message acceptance** at any time.  
 
-To learn more about Next.js, take a look at the following resources:
+- 🔒 **Security**  
+  - Only authenticated users can access & modify their feedback messages.  
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## 🛠️ Tech Stack
+- **Frontend:** Next.js (TypeScript), Tailwind CSS, shadcn UI  
+- **Backend:** Node.js, Express  
+- **Database:** MongoDB (Aggregation Pipeline)  
+- **Authentication:** NextAuth/Auth.js (Google & username-based login)  
+- **Email Service:** Resend (OTP verification)  
+- **AI Integration:** OpenAI API (feedback message suggestions)  
+- **Real-time Updates:** WebSockets or polling  
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📜 System Flowchart  
+_(Flowchart will be inserted here)_  
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+---
+
+## 📸 Screenshots  
+
+1. **Login Page**  
+   ![Login Page](path/to/image1.png)  
+
+2. **Dashboard**  
+   ![Dashboard](path/to/image2.png)  
+
+3. **Feedback Submission Page**  
+   ![Feedback Submission Page](path/to/image3.png)  
+
+4. **Settings Page**  
+   ![Settings Page](path/to/image4.png)  
+
+_(Replace `path/to/imageX.png` with actual image paths once uploaded.)_  
+
+---
+
+## 📦 Installation & Setup
+
+### 🔧 Prerequisites
+- **Node.js** (>= 16.x)  
+- **MongoDB Database**  
+
+### 🚀 Steps to Run Locally
+
+1️⃣ **Clone the repository:**  
+   ```bash
+   git clone <repo-url>
+   cd realtime-feedback
+   ```
+
+2️⃣ **Install dependencies:**  
+   ```bash
+   npm install
+   ```
+
+3️⃣ **Set up environment variables (`.env` file):**  
+   ```
+   NEXTAUTH_SECRET=your-secret-key
+   NEXTAUTH_URL=http://localhost:3000
+   MONGODB_URI=your-mongodb-uri
+   RESEND_API_KEY=your-resend-key
+   OPENAI_API_KEY=your-openai-key
+   ```
+
+4️⃣ **Run the development server:**  
+   ```bash
+   npm run dev
+   ```
+
+5️⃣ **Visit the application:**  
+   ```
+   http://localhost:3000
+   ```
+
+---
+
+## 📜 API Endpoints
+
+| Method | Endpoint                  | Description |
+|--------|---------------------------|-------------|
+| `POST` | `/api/auth/register`       | Register a new user |
+| `POST` | `/api/auth/login`          | User login |
+| `POST` | `/api/auth/verify-otp`     | OTP verification via Resend |
+| `GET`  | `/api/feedback`            | Fetch all feedback messages |
+| `POST` | `/api/feedback`            | Submit feedback message |
+| `DELETE` | `/api/feedback/:id`      | Delete a feedback message |
+
+---
+
+## 🔒 Security & Authentication  
+- Authentication is handled using **NextAuth.js**.  
+- The backend is protected, ensuring only authenticated users can access their feedback.  
+- Username uniqueness is checked in **real-time**.    
+
+---
+
+## ⭐ Contributing  
+Feel free to contribute to the project by submitting issues or pull requests!  
+
+---
+
+## 🙌 Acknowledgements  
+- **Next.js** for the frontend framework  
+- **MongoDB** for the database  
+- **Resend** for email-based OTP verification  
+- **OpenAI API** for AI-suggested feedback messages  
+- **shadcn UI & Tailwind CSS** for styling  
