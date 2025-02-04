@@ -40,7 +40,7 @@ Realtime Feedback is a web-based application that allows users to receive anonym
 ---
 
 ## 📜 System Flowchart  
-_(Flowchart will be inserted here)_  
+_(Flowchart will be Posted Soon)_  
 
 ---
 
@@ -58,7 +58,7 @@ _(Flowchart will be inserted here)_
 4. **Settings Page**  
    ![Settings Page](path/to/image4.png)  
 
-_(Replace `path/to/imageX.png` with actual image paths once uploaded.)_  
+_(Image will be updated very soon.)_  
 
 ---
 
@@ -106,12 +106,12 @@ _(Replace `path/to/imageX.png` with actual image paths once uploaded.)_
 
 | Method | Endpoint                  | Description |
 |--------|---------------------------|-------------|
-| `POST` | `/api/auth/register`       | Register a new user |
-| `POST` | `/api/auth/login`          | User login |
-| `POST` | `/api/auth/verify-otp`     | OTP verification via Resend |
-| `GET`  | `/api/feedback`            | Fetch all feedback messages |
-| `POST` | `/api/feedback`            | Submit feedback message |
-| `DELETE` | `/api/feedback/:id`      | Delete a feedback message |
+| `POST` | `/api/auth/signup`       | Register a new user |
+| `POST` | `/api/auth/signin`          | User login |
+| `POST` | `/api/verify`     | OTP verification via Resend |
+| `GET`  | `/api/dashboard`            | Fetch all feedback messages |
+| `POST` | `/api/publicUrl*`            | Submit feedback message |
+| `DELETE` | `/api/dashboard/:id`      | Delete a feedback message |
 
 ---
 
