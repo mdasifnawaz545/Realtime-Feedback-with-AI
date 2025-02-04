@@ -113,11 +113,11 @@ export default function Signup() {
                     <p className="mb-4">Sign up to start your ananoymous adventure</p>
                 </div>
                 <div className="flex items-center justify-center">
-                    {/* <Button onClick={
+                    <Button onClick={
                         () => {
                             handleGoogleAuth()
                         }
-                    } className="bg-white border text-black hover:text-white"><FcGoogle className="w-full h-full" />&nbsp;&nbsp;Sign in with Google</Button> */}
+                    } className="bg-white border text-black hover:bg-gray-300"><FcGoogle className="w-full h-full" />&nbsp;&nbsp;Sign in with Google</Button>
                 </div>
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-8">

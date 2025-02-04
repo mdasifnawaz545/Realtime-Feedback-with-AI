@@ -9,7 +9,7 @@ export async function sendVerificaitonEmail(username: string, email: string, ver
             to: email,
             subject: `TrueLine Feedback | Verification Code`,
             react: VerificationEmail({ username, otp: verifyCode })
-        });
+        }); 
         return {
             success: true,
             message: `Email has been sent`

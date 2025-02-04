@@ -11,12 +11,11 @@ function Navbar() {
     const user: User = session?.user as User
     return (
 
-        <nav className='flex border-b-2 items-center justify-between px-6 w-full h-14 shadow-lg '>
+        <nav className='flex border-b-2 max-sm:flex-col max-sm:h-28 max-sm:justify-evenly items-center justify-between px-6 w-full h-14 shadow-lg '>
             <div>
-                <Link href="/"><h1 className='text-xl font-bold tracking-wide text-black'>Realtime Feedback.</h1></Link>
+                <Link href="/"><h1 className='text-xl text-center font-bold tracking-wide text-black'>Realtime Feedback.</h1></Link>
             </div>
             <div>
-
                 {
 
                     user ? (<div><Link href={"/dashboard"}><Button >Dashboard</Button></Link>&nbsp;<Button onClick={() => { signOut() }}>Sign out</Button></div>) : (<div className='flex items-center justify-center gap-2'><Link href='/signup'><Button>Sign up</Button></Link><Link href='/signin'><Button>Sign in</Button></Link></div>)

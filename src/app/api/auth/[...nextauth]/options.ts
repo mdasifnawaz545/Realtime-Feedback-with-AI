@@ -44,47 +44,51 @@ export const authOptions: NextAuthOptions = {
                 }
             }
         }),
-        // GoogleProvider({
-        //     clientId: process.env.GOOGLE_CLIENT_ID as string,
-        //     clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
-        //     // allowDangerousEmailAccountLinking: true,
-        // })
+        GoogleProvider({
+            clientId: process.env.GOOGLE_CLIENT_ID as string,
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+            // allowDangerousEmailAccountLinking: true,
+        })
     ],
     callbacks: {
-        // async signIn({ user, account, profile, email, credentials }) {
-        //     console.log(user, account, profile, email, credentials)
-        //     if (account?.provider === 'google') {
-        //         const email = user.email;
-        //         if (email) {
+        async signIn({ user, account, profile, email, credentials }):Promise<any> {
+            console.log("Google User - ");
+            console.log(user, account, profile, email, credentials)
+            if (account?.provider === 'google') {
+                const email = user.email;
+                if (email) {
 
-        //             const isExistingUser = await UserModel.findOne({ email })
-        //             if (isExistingUser) {
-        //                 return true;
-        //             }
-        //             const hashPassword = bcrypt.hash(user.id, 10);
-        //             const newUser = new UserModel({
-        //                 username: user.email?.substring(0, user.email?.indexOf('@')),
-        //                 email: user.email,
-        //                 password: hashPassword,
-        //                 verifyCode: 123456,
-        //                 verifyCodeExpires: new Date(),
-        //                 verified: user.verified,
-        //                 isAcceptingMessages: true,
-        //                 messages: [],
-        //             })
-        //             await newUser.save();
-        //             return true;
-        //         }
-        //         else {
-        //             return false;
-        //         }
+                    const isExistingUser = await UserModel.findOne({ email })
+                    if (isExistingUser) {
+                        console.log(user);
+                        return isExistingUser;
+                    }
+                    const hashPassword = bcrypt.hash(user.id, 10);
+                    const newUser = new UserModel({
+                        username: user.email?.substring(0, user.email?.indexOf('@')),
+                        email: user.email,
+                        password: hashPassword,
+                        verifyCode: 123456,
+                        verifyCodeExpires: new Date(),
+                        verified: user.verified,
+                        isAcceptingMessages: true,
+                        messages: [],
+                    })
+                    await newUser.save();
+                    return isExistingUser;
+                }
+                else {
+                    return false;
+                }
 
-        //     }
-        //     return false;
+            }
+            return false;
 
-        // },
+        },
         async jwt({ token, user }) {
             if (user) {
+                console.log("Token User - ");
+                console.log(user)
                 token._id = user._id?.toString();
                 token.verified = user.verified;
                 token.isAcceptingMessages = user.isAcceptingMessages;
