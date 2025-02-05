@@ -112,13 +112,13 @@ export default function Signup() {
                      font-extrabold w-full tracking-wider lg:text-2xl mb-6">Join Relatime Feedback</h1>
                     <p className="mb-4">Sign up to start your ananoymous adventure</p>
                 </div>
-                <div className="flex items-center justify-center">
+                {/* <div className="flex items-center justify-center">
                     <Button onClick={
                         () => {
                             handleGoogleAuth()
                         }
                     } className="bg-white border text-black hover:bg-gray-300"><FcGoogle className="w-full h-full" />&nbsp;&nbsp;Sign in with Google</Button>
-                </div>
+                </div> */}
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-8">
                         <FormField

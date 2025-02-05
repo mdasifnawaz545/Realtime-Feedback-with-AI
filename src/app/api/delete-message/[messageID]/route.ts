@@ -8,6 +8,7 @@ type Props = {
 }
 
 export async function DELETE(request: Request) {
+    console.log("deleteRequest")
     console.log(request.url);
     const messageID=request.url.substring(request.url.lastIndexOf('/')+1)
     console.log(messageID)

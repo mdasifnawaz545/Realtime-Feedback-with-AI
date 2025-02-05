@@ -33,14 +33,6 @@ function Signin() {
         identifier: data.identifier,
         password: data.password
       })
-      if (loginResponse?.error) {
-        toast({
-          title: "Failed",
-          description: "Failed to login, either username or password is incorrect",
-          variant: "destructive"
-        })
-      }
-      // console.log(loginResponse)
       if (loginResponse?.url) {
         toast({
           title: "Success",
@@ -48,15 +40,23 @@ function Signin() {
           variant: "default"
         })
         setIssubmitting(false)
-
         router.push('/dashboard')
       }
-
+      if (loginResponse?.error) {
+        toast({
+          title: "Failed",
+          description: "Failed to login, either username or password is incorrect",
+          variant: "destructive"
+        })
+        setIssubmitting(false)
+      }
+      // console.log(loginResponse)
+      
 
     } catch (error) {
       const errorMsg = error as AxiosError<API_Response>
       toast({
-        title: "Failed to Login",
+        title: "Failed to Login from Server",
         description: errorMsg.response?.data.message,
         variant: "destructive"
       })

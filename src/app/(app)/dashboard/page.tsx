@@ -203,9 +203,11 @@ export default function Dashboard() {
       </div>
     </>
   }
+  // console.log("Message is - ",messages)
+
 
   return (
-    <div className="my-8 px-4 md:mx-8 lg:mx-auto p-6 bg-white rounded w-full max-w-6xl overflow-x-hidden">
+    <div className="my-8 px-4 lg:mx-auto p-6 bg-white rounded w-full max-w-6xl overflow-x-hidden">
       <h1 className="text-4xl font-bold mb-4">User Dashboard</h1>
 
       <div className="mb-4">
@@ -248,10 +250,11 @@ export default function Dashboard() {
           <RefreshCcw className="h-4 w-4" />
         )}
       </Button>
-      <div className="p-4 flex flex-wrap items-center justify-center gap-4">
+
+      <div className="w-full flex flex-wrap items-center justify-center">
         {
           (messages.map((message, index) => (
-            <Card id={message._id} message={message} key={index} func={handleDeleteEfficiently} />
+            <MessageCard message={message} key={index} onDelete={handleDeleteEfficiently} />
           )))
 
         }
