@@ -219,10 +219,10 @@ function Verify({ params: { username } }: Props) {
 
                         <div>
                             <p className="text-sm text-red-500 mt-2 text-justify"><b>NOTE: </b>
-                                Due to email provider restrictions, OTP emails can only be sent to a specific email address. If you haven't received your OTP, please contact us at{" "}
+                                Due to email provider restrictions, OTP emails can only be sent to a specific email address. If you haven't received your OTP, please contact us at 
                                 <a href="mailto:mdasifnawaz545@gmail.com" className="text-blue-500 underline">
-                                    mdasifnawaz545@gmail.com
-                                </a>{" "}
+                                    mdasifnawaz545@gmail.com 
+                                </a>
                                 so we can provide existing credentials for authentication. We apologize for the inconvenience and appreciate your patience.
                             </p>
                         </div>
