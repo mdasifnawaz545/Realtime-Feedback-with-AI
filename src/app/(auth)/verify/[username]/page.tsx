@@ -214,20 +214,22 @@ function Verify({ params: { username } }: Props) {
                                 ) : "Verify"
                             }
                         </Button>
+
+                        <br />
+
+                        <div>
+                            <p className="text-sm text-red-500 mt-2 text-justify"><b>NOTE: </b>
+                                Due to email provider restrictions, OTP emails can only be sent to a specific email address. If you haven't received your OTP, please contact us at{" "}
+                                <a href="mailto:mdasifnawaz545@gmail.com" className="text-blue-500 underline">
+                                    mdasifnawaz545@gmail.com
+                                </a>{" "}
+                                so we can provide existing credentials for authentication. We apologize for the inconvenience and appreciate your patience.
+                            </p>
+                        </div>
+
                     </form>
                 </Form>
-               <div>
 
-
-<p className="text-sm text-red-500 mt-2">
-  Due to email provider restrictions, OTP emails can only be sent to a specific email address. If you haven't received your OTP, please contact us at{" "}
-  <a href="mailto:mdasifnawaz545@gmail.com" className="text-blue-500 underline">
-    mdasifnawaz545@gmail.com
-  </a>{" "}
-  so we can provide existing credentials for authentication. We apologize for the inconvenience and appreciate your patience.
-</p>
-
-               </div>
             </div>
 
         </div>
